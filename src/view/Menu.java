@@ -37,7 +37,8 @@ public class Menu {
 			System.out.println("            3 - Buscar Produto por ID                ");
 			System.out.println("            4 - Atualizar Produto                    ");
 			System.out.println("            5 - Deletar Produto                      ");
-			System.out.println("            6 - Sair                                 ");
+			System.out.println("            6 - Listar Produtos por Preço            ");                
+			System.out.println("            7 - Sair                                 ");
 			System.out.println("                                                     ");
 			System.out.println("───────────────────────༺𓆩༒︎𓆪༻───────────────────────");
 
@@ -51,7 +52,7 @@ public class Menu {
                 continue;
             }
 
-            if (opcao == 6) {
+            if (opcao == 7) {
                 System.out.println(Cores.ANSI_BLACK_BACKGROUND + Cores.TEXT_AURORA
                         + "\nArtes Aurora - Obrigado por usar nosso sistema!");
                 sobre();
@@ -210,10 +211,50 @@ public class Menu {
                     produtos.deletar(id);
                     keyPress();
                 }
+                
+                
+                case 6 -> { // Meu extra
+					System.out.println("Listar produtos por intervalo de preço\n\n");
+
+					float precoMin = 0, precoMax = 0;
+
+					while (true) {
+						try {
+							System.out.print("Digite o Preço Mínimo: ");
+							precoMin = sc.nextFloat();
+							break;
+						} catch (InputMismatchException e) {
+							System.out.println("Preço inválido! Digite um número.");
+							sc.nextLine();
+						}
+					}
+
+					while (true) {
+						try {
+							System.out.print("Digite o Preço Máximo: ");
+							precoMax = sc.nextFloat();
+							break;
+						} catch (InputMismatchException e) {
+							System.out.println("Preço inválido! Digite um número.");
+							sc.nextLine();
+						}
+					}
+
+					if (precoMin > precoMax) {
+						System.out.println("\nIntervalo inválido: o preço mínimo é maior que o preço máximo.");
+					} else {
+						produtos.listarProdutosPorPreco(precoMin, precoMax);
+					}
+
+					keyPress();
+                }
+                
                 default -> {
                     System.out.println("\nOpção Inválida!\n");
                     keyPress();
                 }
+                
+                
             }
         }
     }
